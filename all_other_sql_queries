@@ -1,0 +1,40 @@
+--query nummer h
+SELECT autor.nachname,autor.vornamen ,buch.titel
+FROM bibliothek.autor 
+INNER JOIN bibliothek.buch_aut 
+ON autor.autorid=buch_aut.autorid
+INNER JOIN bibliothek.buch
+ON buch_aut.buchid=buch.buchid
+INNER JOIN bibliothek.verlag
+ON buch.verlagsid=verlag.verlagsid
+WHERE buch_aut.rolle 
+LIKE 'v'
+AND verlag.ort LIKE 'Berlin'
+ORDER BY autor.vornamen;
+
+
+--query nummer i
+SELECT buch.titel,buch.jahr 
+FROM bibliothek.buch 
+WHERE ((SELECT EXTRACT(ISOYEAR FROM CURRENT_DATE) ) > 1997) 
+ORDER BY buch.jahr ASC; 
+--query nummer j
+SELECT autor.nachname,autor.vornamen,buch.titel,autor.autorid
+FROM bibliothek.autor
+INNER JOIN bibliothek.buch_aut
+ON autor.autorid=buch_aut.autorid
+INNER JOIN bibliothek.buch
+ON buch_aut.buchid=buch.buchid
+WHERE buch.titel LIKE '%Datenbank'
+--query nummer k
+SELECT buch.buchid,buch.titel
+FROM bibliothek.buch
+INNER JOIN bibliothek.verlag
+ON buch.verlagsid=verlag.verlagsid
+WHERE verlag.name LIKE '%Springer%'
+AND buch.jahr > 1990
+ORDER BY buch.jahr,buch.titel ASC
+
+
+
+		
